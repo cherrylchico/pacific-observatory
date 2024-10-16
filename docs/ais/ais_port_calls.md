@@ -1,4 +1,4 @@
-# Maritime Trade
+# Port Calls
 There is growing research on the use of Automatic Identification System (AIS) data as alternative source 
 for port and seaborne trade statistics. In recent years, the UK and US statistical agencies started publishing 
 AIS-derived maritime statistics as part of their [real-time faster economic 

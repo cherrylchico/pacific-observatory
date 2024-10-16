@@ -43,7 +43,8 @@ parts:
   - caption: Automatic Identification System
     chapters:
       - file: ais/ais_intro
-      - file: ais/ais_trade_estimation
+      - file: ais/ais_port_calls
+      - file: ais/ais_trade
       - file: ais/ais_market_concentration
       - file: ais/ais_emissions
   - caption: Geospatial Poverty Map

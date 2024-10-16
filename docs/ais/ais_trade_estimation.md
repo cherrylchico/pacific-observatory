@@ -1,46 +1,108 @@
 # Maritime Trade
-- General Methodology
-  - Define port boundary
-  - Generate port calls from boundary
-  - Estimate trade / generate indicators
+There is growing research on the use of Automatic Identification System (AIS) data as alternative source 
+for port and seaborne trade statistics. In recent years, the UK and US statistical agencies started publishing 
+AIS-derived maritime statistics as part of their [real-time faster economic 
+indicators for UK](https://datasciencecampus.ons.gov.uk/projects/faster-indicators-of-uk-economic-activity-improving-the-shipping-indicators/), 
+and [Covid-19 related transport statistics for US](https://www.bts.gov/freight-indicators#anchored-offshore). 
+For pacific island economies where official data is not 
+readily available, AIS data shows great potential to fill the gaps on  seaborne trade activities.
 
-## Review of Related Literature
-- <a href="https://www.imf.org/en/Publications/WP/Issues/2019/12/13/Big-Data-on-Vessel-Traffic-Nowcasting-Trade-Flows-in-Real-Time-48837"><b>2019 IMF: Big Data on Vessel Traffic: Nowcasting Trade Flows in Real Time</b><a>
-  - Port Calls created by Marine Traffic
-  - Data waterfall
-    - Exclude: speed > 1.0 knot
-    - Exclude: Anchorage and bunkering tankers - remove bunkering tankers
-        - Fuel supplied to foreign vessels should be recorded as exports of the country according to international standards, although it is recognized that data collection may be challenging.6 Since the inclusion of these tankers introduces considerable volatility to the indices, we omit bunkering tankers from our valid port calls
-    - Exclude: Ship arrived but not departerd
-    - Exclude: Stay in the harbor outside reasonable range for trade activity
-        - stay in port < 5hrs: unlikely to have enough time to load or unload goods in the port
-        - stay in port > 60 hrs: Longer stays may be associated with ships visiting the port for repairs or maintenance services.
-  - Indicators:
-    - cargo number
-        - cargo load
-            - $ CWI_t = \sum_{i}^{} DWT_{i, t} \frac{|d_{i,t}^{D} - d_{i,t}^{A}|}{max(d_{i})} $
-            - DWT is adjusted with a capacity utilization ratio.
+The steps for capturing seaborne trade activities involves identifying port calls from AIS data. The next section 
+summarizes related literature for these steps.
 
-- <a href="https://www.sciencedirect.com/science/article/pii/S1361920920305800"><b> 2020 Science Direct: Port disruptions due to natural disasters: Insights into port and logistics resilience</b><a>
-  - no mention of how port calls were derived
-  - ![image.png](ais/port-disruptions.png)
+| study | Output                                | Coverage                         |Methods|
+|-------|---------------------------------------|----------------------------------|---|
+| 1, 2  | port boundary, port calls, cargo load | Global, vessels related to trade | asd|
 
-- <a href="https://www.imf.org/en/Publications/WP/Issues/2020/05/14/World-Seaborne-Trade-in-Real-Time-A-Proof-of-Concept-for-Building-AIS-based-Nowcasts-from-49393"><b> 2020 IMF: World Seaborne Trade in Real Time</b><a>
-  - Port boundary:
-    - SOG < 0.5, \& nav status anchored or moored
+In here, we validate the use of AIS data to produce official port statistics 
+for pacific island economies, with Samoa as use case for its admin data availability (5).
+Our main data sources are the UN Global Platform (UNGP) for AIS and Ship Registry (6),
+and global port boundaries requested from the author of 
+“Tracking trade from space: an application to pacific island countries“ (4). 
+We used the helper functions from ais python package (7) with some refinements
+to generate a port calls dataset. We follow two existing methodologies on cargo
+volume estimation (4, 8, 9) to estimate the cargo carried by the vessel upon
+arrival and departure. We find that our derived port calls data accurately capture
+international trade-related ships, but cargo volume estimates are still far-off from 
+official data.
 
-- <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0248818#pone.0248818.s001"><b> 2021 Global economic impacts of COVID-19 lockdown measures stand out in high-frequency shipping data</b><a>
-  - Port Boundary: manually mapped, berthing + navigation channels
-  - Port Calls: Vessel call algorithm
-    - Filter:
-      - include: cargo and tanker vessels.
-      - exclude: stay in port less than 5h and more than the 95th percentile (of the port) are truncated, as they are most likely associated with refueling, repair or maintenance.
-      - exclude: turnaround time of less than 10h and leave the port area at a direction that is within 45 degree of the direction of entering the port area. These port calls are most likely associated with vessels passing a port (e.g. ports alongside a river).
+## Data and Methods
+Figure 1 presents the port calls methodology from the Samoa study. 
+The term “port buffer” refers to a large area encompassing the port, 
+with a square boundary of  22 km from the port. AIS data within the port buffer are 
+extracted and then aggregated into routes. A route comprises consecutive AIS messages 
+transmitted by a vessel during a port visit. It summarizes essential information such 
+as the vessel’s port arrival and departure time at the port, as well as the changes in 
+its draught. From here, the vessels are verified  in the Ship Registry data to identify
+routes undertaken by individual ships. The Ship Registry data provides additional
+information about the ship’s characteristics that are not available in AIS 
+but are necessary for trade estimation purposes. Following this, the next port
+calls for each route are generated to update the departure draught information
+and determine if the vessel is embarking on an international voyage. The port 
+calls data consists of routes from vessels that meet two criteria: cargo-carrying
+(excluding for passenger ships) according to the Ship Register and engaged in
+international voyages according to their next port calls. 
 
-- <a href="https://www.imf.org/en/Publications/WP/Issues/2021/08/20/Tracking-Trade-from-Space-An-Application-to-Pacific-Island-Countries-464345"><b> 2021 IMF: Tracking Trade from Space: An Application to Pacific Island Countries</b><a>
-  - Port Boundary: "manually determined using satellite imagery"
-  - Port Call:
-    - include: focus on container ships—the main engine of seaborne trade in the Pacific—vehicle carriers, and bulk carriers (relevant for Fiji, Nauru, and Solomon Islands as commodity-exporters).
-    - exclude: Fuel tankers are not included, as Pacific countries import a significant portion of fuel for re-exports (for visiting foreign vessels and airlines
-    - exclude vessels in transit: turnaround time of less than 5 hours and no draft change between the current and next port
-
+## Port Calls
+````{tab-set}
+``` {tab-item} Federated States of Micronesia
+<div id= "content">
+<iframe src="../interactive/ais/port calls/Micronesia port calls.html" name="Micronesia" id="Micronesia" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+``` 
+``` {tab-item} Fiji 
+<div id= "content">
+<iframe src="../interactive/ais/port calls/Fiji port calls.html" name="Fiji" id="Fiji" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+``` 
+```{tab-item} Kiribati
+<div id= "content">
+    <iframe src="../interactive/ais/port calls/Kiribati port calls.html" name="Kiribati" id="Kiribati" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+```
+```{tab-item} Marshall Islands
+<div id= "content">
+    <iframe src="../interactive/ais/port calls/Marshall Islands port calls.html" name="Marshall" id="Marshall" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+```
+```{tab-item} Nauru
+<div id= "content">
+    <iframe src="../interactive/ais/port calls/Nauru port calls.html" name="Nauru" id="Nauru" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+```
+```{tab-item} Palau
+<div id= "content">
+    <iframe src="../interactive/ais/port calls/Palau port calls.html" name="Palau" id="Palau" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+```
+```{tab-item} Papua New Guinea
+<div id= "content">
+    <iframe src="../interactive/ais/port calls/Papua New Guinea port calls.html" name="Palau" id="Papua New Guinea" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+```
+```{tab-item} Samoa
+<div id= "content">
+    <iframe src="../interactive/ais/port calls/Samoa port calls.html" name="Samoa" id="Samoa" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+```
+```{tab-item} Solomon Islands
+<div id= "content">
+    <iframe src="../interactive/ais/port calls/Solomon Islands port calls.html" name="Solomon" id="Solomon" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+```
+```{tab-item} Tonga
+<div id= "content">
+    <iframe src="../interactive/ais/port calls/Tonga port calls.html "name="Tonga" id="Tonga" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+```
+```{tab-item} Tuvalu
+<div id= "content">
+    <iframe src="../interactive/ais/port calls/Tuvalu port calls.html" name="Tuvalu" id="Tuvalu" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+```
+```{tab-item} Vanuatu
+<div id= "content">
+    <iframe src="../interactive/ais/port calls/Vanuatu port calls.html" name="Vanuatu" id="Vanuatu" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+```
+````

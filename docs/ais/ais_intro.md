@@ -31,12 +31,12 @@ can be shown by choosing the corresponding layer from the upper-right button of 
 ``` 
 ``` {tab-item} Fiji 
 <div id= "content">
-<iframe src="interactive/ais/Fiji2023.html" name="Micronesia" id="Micronesia" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+<iframe src="interactive/ais/Fiji2023.html" name="Fiji" id="Fiji" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
 </div>
 ``` 
 ```{tab-item} Kiribati
 <div id= "content">
-    <iframe src="interactive/ais/Kiribati2019.html" name="Kiribati" id="Kiribati" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+    <iframe src="interactive/ais/Kiribati2023.html" name="Kiribati" id="Kiribati" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
 </div>
 ```
 ```{tab-item} Marshall Islands

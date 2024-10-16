@@ -23,12 +23,70 @@ Hover on the location to know the country or port name.
 The AIS density per vessel type (cargo, tankers, passengers, fishing, and others)
 can be shown by choosing the corresponding layer from the upper-right button of the map. 
 
-```
+````{tab-set}
+``` {tab-item} Federated States of Micronesia
 <div id= "content">
-<iframe src="interactive/ais/Pacific Islands AIS Heatmap.html" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+<iframe src="interactive/ais/Micronesia2023.html" name="Micronesia" id="Micronesia" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+``` 
+``` {tab-item} Fiji 
+<div id= "content">
+<iframe src="interactive/ais/Fiji2023.html" name="Micronesia" id="Micronesia" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+``` 
+```{tab-item} Kiribati
+<div id= "content">
+    <iframe src="interactive/ais/Kiribati2019.html" name="Kiribati" id="Kiribati" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
 </div>
 ```
-
+```{tab-item} Marshall Islands
+<div id= "content">
+    <iframe src="interactive/ais/Marshall-Islands2019.html" name="Marshall" id="Marshall" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+```
+```{tab-item} Nauru
+<div id= "content">
+    <iframe src="interactive/ais/Nauru2019.html" name="Nauru" id="Nauru" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+```
+```{tab-item} Palau
+<div id= "content">
+    <iframe src="interactive/ais/Palau2019.html" name="Palau" id="Palau" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+```
+```{tab-item} Papua New Guinea
+No data prep yet
+```
+```{tab-item} Samoa
+<div id= "content">
+    <iframe src="interactive/ais/Samoa2019.html" name="Samoa" id="Samoa" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+```
+```{tab-item} Solomon Islands
+<div id= "content">
+    <iframe src="interactive/ais/SolomonIslands2019.html" name="Solomon" id="Solomon" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+```
+```{tab-item} Tonga
+<div id= "content">
+    <iframe src="interactive/ais/Tonga2019.html "name="Tonga" id="Tonga" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+```
+```{tab-item} Tuvalu
+<div id= "content">
+    <iframe src="interactive/ais/Tuvalu2019.html" name="Tuvalu" id="Tuvalu" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+```
+```{tab-item} Vanuatu
+<div id= "content">
+    <iframe src="interactive/ais/Vanuatu2019.html" name="Vanuatu" id="Vanuatu" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+```
+````
+Sources: 
+AIS data from [UN Global Platform](https://www.officialstatistics.org/); 
+EEZ geojson file from [Pacific Data hub](https://pacificdata.org/data/dataset/pacific-island-countries-and-territories-exclusive-economic-zones);
+port locations derived from port boundaries from IMF. 
 
 ## Additional Resources
 

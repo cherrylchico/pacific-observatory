@@ -1,10 +1,8 @@
 # Emissions 
-### Yearly CO2 emissions by Country and Vessel Type
-```
-<div id= "content">
-<iframe src="../interactive/ais/emissions/Yearly CO2 emissions by Country and Vessel Type.html" name="YearlyEmissions" id="YearlyEmissions" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen="" height="600"></iframe>
+## Yearly CO2 emissions by Country and Vessel Type
+<div style="height: 600px">
+<iframe src="../interactive/ais/emissions/Yearly CO2 emissions by Country and Vessel Type.html" name="YearlyEmissions" id="YearlyEmissions" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen="" height="1000"></iframe>
 </div>
-```
 ## Emissions from Fishing Vessels
 ````{tab-set}
 ``` {tab-item} Federated States of Micronesia

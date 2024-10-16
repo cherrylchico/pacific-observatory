@@ -1,13 +1,15 @@
 # Emissions 
 ## Yearly CO2 emissions by Country and Vessel Type
 <div>
-<iframe src="../interactive/ais/emissions/Yearly CO2 emissions by Country and Vessel Type.html" name="YearlyEmissions" id="YearlyEmissions" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+<iframe src="../interactive/ais/emissions/Yearly CO2 emissions by Country and Vessel Type.html" name="YearlyEmissions" id="YearlyEmissions" 
+frameborder="0" marginwidth="0" marginheight="0" allowfullscreen="" width="500" height="700">
+</iframe>
 </div>
 
 ## Emissions from Fishing Vessels
 ````{tab-set}
 ``` {tab-item} Federated States of Micronesia
-<div id= "content">
+<div style="height=100px">
 <iframe src="../interactive/ais/emissions/Micronesia Monthly CO2 vs VDS.html" name="Micronesia" id="Micronesia" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen="" height="600"></iframe>
 </div>
 ``` 
@@ -38,32 +40,32 @@
 ```
 ```{tab-item} Papua New Guinea
 <div id= "content">
-    <iframe src="../interactive/ais/emissions/Papua New Guinea port calls.html" name="Palau" id="Papua New Guinea" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen="" height="600"></iframe>
+    <iframe src="../interactive/ais/emissions/Papua New Guinea Monthly CO2 vs VDS.html" name="Palau" id="Papua New Guinea" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen="" height="600"></iframe>
 </div>
 ```
 ```{tab-item} Samoa
 <div id= "content">
-    <iframe src="../interactive/ais/emissions/Samoa port calls.html" name="Samoa" id="Samoa" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen="" height="600"></iframe>
+    <iframe src="../interactive/ais/emissions/Samoa Monthly CO2 vs VDS.html" name="Samoa" id="Samoa" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen="" height="600"></iframe>
 </div>
 ```
 ```{tab-item} Solomon Islands
 <div id= "content">
-    <iframe src="../interactive/ais/emissions/Solomon Islands port calls.html" name="Solomon" id="Solomon" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen="" height="600"></iframe>
+    <iframe src="../interactive/ais/emissions/Solomon Monthly CO2 vs VDS.html" name="Solomon" id="Solomon" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen="" height="600"></iframe>
 </div>
 ```
 ```{tab-item} Tonga
 <div id= "content">
-    <iframe src="../interactive/ais/emissions/Tonga port calls.html "name="Tonga" id="Tonga" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen="" height="600"></iframe>
+    <iframe src="../interactive/ais/emissions/Tonga Monthly CO2 vs VDS.html "name="Tonga" id="Tonga" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen="" height="600"></iframe>
 </div>
 ```
 ```{tab-item} Tuvalu
 <div id= "content">
-    <iframe src="../interactive/ais/emissions/Tuvalu port calls.html" name="Tuvalu" id="Tuvalu" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen="" height="600"></iframe>
+    <iframe src="../interactive/ais/emissions/Tuvalu Monthly CO2 vs VDS.html" name="Tuvalu" id="Tuvalu" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen="" height="600"></iframe>
 </div>
 ```
 ```{tab-item} Vanuatu
 <div id= "content">
-    <iframe src="../interactive/ais/emissions/Vanuatu port calls.html" name="Vanuatu" id="Vanuatu" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen="" height="600"></iframe>
+    <iframe src="../interactive/ais/emissions/Vanuatu Monthly CO2 vs VDS.html" name="Vanuatu" id="Vanuatu" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen="" height="600"></iframe>
 </div>
 ```
 ````

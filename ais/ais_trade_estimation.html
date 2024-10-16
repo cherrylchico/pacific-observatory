@@ -64,8 +64,6 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'ais/ais_trade_estimation';</script>
     <link rel="canonical" href="https://github.com/worldbank/pacific-observatory/ais/ais_trade_estimation.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -453,7 +451,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#review-of-related-literature">Review of Related Literature</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-and-methods">Data and Methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#port-calls">Port Calls</a></li>
 </ul>
             </nav>
         </div>
@@ -467,98 +466,149 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="maritime-trade">
 <h1>Maritime Trade<a class="headerlink" href="#maritime-trade" title="Permalink to this heading">#</a></h1>
-<ul class="simple">
-<li><p>General Methodology</p>
-<ul>
-<li><p>Define port boundary</p></li>
-<li><p>Generate port calls from boundary</p></li>
-<li><p>Estimate trade / generate indicators</p></li>
-</ul>
-</li>
-</ul>
-<section id="review-of-related-literature">
-<h2>Review of Related Literature<a class="headerlink" href="#review-of-related-literature" title="Permalink to this heading">#</a></h2>
-<ul class="simple">
-<li><p><a href="https://www.imf.org/en/Publications/WP/Issues/2019/12/13/Big-Data-on-Vessel-Traffic-Nowcasting-Trade-Flows-in-Real-Time-48837"><b>2019 IMF: Big Data on Vessel Traffic: Nowcasting Trade Flows in Real Time</b><a></p>
-<ul>
-<li><p>Port Calls created by Marine Traffic</p></li>
-<li><p>Data waterfall</p>
-<ul>
-<li><p>Exclude: speed &gt; 1.0 knot</p></li>
-<li><p>Exclude: Anchorage and bunkering tankers - remove bunkering tankers</p>
-<ul>
-<li><p>Fuel supplied to foreign vessels should be recorded as exports of the country according to international standards, although it is recognized that data collection may be challenging.6 Since the inclusion of these tankers introduces considerable volatility to the indices, we omit bunkering tankers from our valid port calls</p></li>
-</ul>
-</li>
-<li><p>Exclude: Ship arrived but not departerd</p></li>
-<li><p>Exclude: Stay in the harbor outside reasonable range for trade activity</p>
-<ul>
-<li><p>stay in port &lt; 5hrs: unlikely to have enough time to load or unload goods in the port</p></li>
-<li><p>stay in port &gt; 60 hrs: Longer stays may be associated with ships visiting the port for repairs or maintenance services.</p></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Indicators:</p>
-<ul>
-<li><p>cargo number</p>
-<ul>
-<li><p>cargo load</p>
-<ul>
-<li><p><span class="math notranslate nohighlight">\( CWI_t = \sum_{i}^{} DWT_{i, t} \frac{|d_{i,t}^{D} - d_{i,t}^{A}|}{max(d_{i})} \)</span></p></li>
-<li><p>DWT is adjusted with a capacity utilization ratio.</p></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><a href="https://www.sciencedirect.com/science/article/pii/S1361920920305800"><b> 2020 Science Direct: Port disruptions due to natural disasters: Insights into port and logistics resilience</b><a></p>
-<ul>
-<li><p>no mention of how port calls were derived</p></li>
-<li><p><img alt="image.png" src="ais/ais/port-disruptions.png" /></p></li>
-</ul>
-</li>
-<li><p><a href="https://www.imf.org/en/Publications/WP/Issues/2020/05/14/World-Seaborne-Trade-in-Real-Time-A-Proof-of-Concept-for-Building-AIS-based-Nowcasts-from-49393"><b> 2020 IMF: World Seaborne Trade in Real Time</b><a></p>
-<ul>
-<li><p>Port boundary:</p>
-<ul>
-<li><p>SOG &lt; 0.5, &amp; nav status anchored or moored</p></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0248818#pone.0248818.s001"><b> 2021 Global economic impacts of COVID-19 lockdown measures stand out in high-frequency shipping data</b><a></p>
-<ul>
-<li><p>Port Boundary: manually mapped, berthing + navigation channels</p></li>
-<li><p>Port Calls: Vessel call algorithm</p>
-<ul>
-<li><p>Filter:</p>
-<ul>
-<li><p>include: cargo and tanker vessels.</p></li>
-<li><p>exclude: stay in port less than 5h and more than the 95th percentile (of the port) are truncated, as they are most likely associated with refueling, repair or maintenance.</p></li>
-<li><p>exclude: turnaround time of less than 10h and leave the port area at a direction that is within 45 degree of the direction of entering the port area. These port calls are most likely associated with vessels passing a port (e.g. ports alongside a river).</p></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><a href="https://www.imf.org/en/Publications/WP/Issues/2021/08/20/Tracking-Trade-from-Space-An-Application-to-Pacific-Island-Countries-464345"><b> 2021 IMF: Tracking Trade from Space: An Application to Pacific Island Countries</b><a></p>
-<ul>
-<li><p>Port Boundary: “manually determined using satellite imagery”</p></li>
-<li><p>Port Call:</p>
-<ul>
-<li><p>include: focus on container ships—the main engine of seaborne trade in the Pacific—vehicle carriers, and bulk carriers (relevant for Fiji, Nauru, and Solomon Islands as commodity-exporters).</p></li>
-<li><p>exclude: Fuel tankers are not included, as Pacific countries import a significant portion of fuel for re-exports (for visiting foreign vessels and airlines</p></li>
-<li><p>exclude vessels in transit: turnaround time of less than 5 hours and no draft change between the current and next port</p></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+<p>There is growing research on the use of Automatic Identification System (AIS) data as alternative source
+for port and seaborne trade statistics. In recent years, the UK and US statistical agencies started publishing
+AIS-derived maritime statistics as part of their <a class="reference external" href="https://datasciencecampus.ons.gov.uk/projects/faster-indicators-of-uk-economic-activity-improving-the-shipping-indicators/">real-time faster economic
+indicators for UK</a>,
+and <a class="reference external" href="https://www.bts.gov/freight-indicators#anchored-offshore">Covid-19 related transport statistics for US</a>.
+For pacific island economies where official data is not
+readily available, AIS data shows great potential to fill the gaps on  seaborne trade activities.</p>
+<p>The steps for capturing seaborne trade activities involves identifying port calls from AIS data. The next section
+summarizes related literature for these steps.</p>
+<div class="pst-scrollable-table-container"><table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>study</p></th>
+<th class="head"><p>Output</p></th>
+<th class="head"><p>Coverage</p></th>
+<th class="head"><p>Methods</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1, 2</p></td>
+<td><p>port boundary, port calls, cargo load</p></td>
+<td><p>Global, vessels related to trade</p></td>
+<td><p>asd</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>In here, we validate the use of AIS data to produce official port statistics
+for pacific island economies, with Samoa as use case for its admin data availability (5).
+Our main data sources are the UN Global Platform (UNGP) for AIS and Ship Registry (6),
+and global port boundaries requested from the author of
+“Tracking trade from space: an application to pacific island countries“ (4).
+We used the helper functions from ais python package (7) with some refinements
+to generate a port calls dataset. We follow two existing methodologies on cargo
+volume estimation (4, 8, 9) to estimate the cargo carried by the vessel upon
+arrival and departure. We find that our derived port calls data accurately capture
+international trade-related ships, but cargo volume estimates are still far-off from
+official data.</p>
+<section id="data-and-methods">
+<h2>Data and Methods<a class="headerlink" href="#data-and-methods" title="Permalink to this heading">#</a></h2>
+<p>Figure 1 presents the port calls methodology from the Samoa study.
+The term “port buffer” refers to a large area encompassing the port,
+with a square boundary of  22 km from the port. AIS data within the port buffer are
+extracted and then aggregated into routes. A route comprises consecutive AIS messages
+transmitted by a vessel during a port visit. It summarizes essential information such
+as the vessel’s port arrival and departure time at the port, as well as the changes in
+its draught. From here, the vessels are verified  in the Ship Registry data to identify
+routes undertaken by individual ships. The Ship Registry data provides additional
+information about the ship’s characteristics that are not available in AIS
+but are necessary for trade estimation purposes. Following this, the next port
+calls for each route are generated to update the departure draught information
+and determine if the vessel is embarking on an international voyage. The port
+calls data consists of routes from vessels that meet two criteria: cargo-carrying
+(excluding for passenger ships) according to the Ship Register and engaged in
+international voyages according to their next port calls.</p>
+</section>
+<section id="port-calls">
+<h2>Port Calls<a class="headerlink" href="#port-calls" title="Permalink to this heading">#</a></h2>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-0">
+Federated States of Micronesia</label><div class="sd-tab-content docutils">
+<div id= "content">
+<iframe src="../interactive/ais/port calls/Micronesia port calls.html" name="Micronesia" id="Micronesia" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-1">
+Fiji</label><div class="sd-tab-content docutils">
+<div id= "content">
+<iframe src="../interactive/ais/port calls/Fiji port calls.html" name="Fiji" id="Fiji" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+</div>
+<input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-2">
+Kiribati</label><div class="sd-tab-content docutils">
+<div id= "content">
+    <iframe src="../interactive/ais/port calls/Kiribati port calls.html" name="Kiribati" id="Kiribati" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+</div>
+<input id="sd-tab-item-3" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-3">
+Marshall Islands</label><div class="sd-tab-content docutils">
+<div id= "content">
+    <iframe src="../interactive/ais/port calls/Marshall Islands port calls.html" name="Marshall" id="Marshall" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+</div>
+<input id="sd-tab-item-4" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-4">
+Nauru</label><div class="sd-tab-content docutils">
+<div id= "content">
+    <iframe src="../interactive/ais/port calls/Nauru port calls.html" name="Nauru" id="Nauru" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+</div>
+<input id="sd-tab-item-5" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-5">
+Palau</label><div class="sd-tab-content docutils">
+<div id= "content">
+    <iframe src="../interactive/ais/port calls/Palau port calls.html" name="Palau" id="Palau" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+</div>
+<input id="sd-tab-item-6" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-6">
+Papua New Guinea</label><div class="sd-tab-content docutils">
+<div id= "content">
+    <iframe src="../interactive/ais/port calls/Papua New Guinea port calls.html" name="Palau" id="Papua New Guinea" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+</div>
+<input id="sd-tab-item-7" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-7">
+Samoa</label><div class="sd-tab-content docutils">
+<div id= "content">
+    <iframe src="../interactive/ais/port calls/Samoa port calls.html" name="Samoa" id="Samoa" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+</div>
+<input id="sd-tab-item-8" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-8">
+Solomon Islands</label><div class="sd-tab-content docutils">
+<div id= "content">
+    <iframe src="../interactive/ais/port calls/Solomon Islands port calls.html" name="Solomon" id="Solomon" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+</div>
+<input id="sd-tab-item-9" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-9">
+Tonga</label><div class="sd-tab-content docutils">
+<div id= "content">
+    <iframe src="../interactive/ais/port calls/Tonga port calls.html "name="Tonga" id="Tonga" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+</div>
+<input id="sd-tab-item-10" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-10">
+Tuvalu</label><div class="sd-tab-content docutils">
+<div id= "content">
+    <iframe src="../interactive/ais/port calls/Tuvalu port calls.html" name="Tuvalu" id="Tuvalu" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+</div>
+<input id="sd-tab-item-11" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-11">
+Vanuatu</label><div class="sd-tab-content docutils">
+<div id= "content">
+    <iframe src="../interactive/ais/port calls/Vanuatu port calls.html" name="Vanuatu" id="Vanuatu" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+</div>
+</div>
+</div>
 </section>
 </section>
 
@@ -626,7 +676,8 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#review-of-related-literature">Review of Related Literature</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-and-methods">Data and Methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#port-calls">Port Calls</a></li>
 </ul>
   </nav></div>
 

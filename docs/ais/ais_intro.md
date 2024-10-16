@@ -25,7 +25,7 @@ The white circles point to port locations. To view the density maps, choose the 
 ````{tab-set}
 ``` {tab-item} Federated States of Micronesia
 <div id= "content">
-<iframe src="../interactive/ais/Micronesia2023.html" name="Micronesia" id="Micronesia" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+<iframe src="../interactive/ais/Micronesia2023.html" name="Micronesia" id="Micronesia" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen="" style="width:100%; height:100%;"></iframe>
 </div>
 ``` 
 ``` {tab-item} Fiji 
@@ -55,7 +55,7 @@ The white circles point to port locations. To view the density maps, choose the 
 ```
 ```{tab-item} Papua New Guinea
 <div id= "content">
-    <iframe src="../interactive/ais/Papua New Guinea 2023.html" name="Palau" id="Papua New Guinea" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+    <iframe src="../interactive/ais/Papua New Guinea2023.html" name="Palau" id="Papua New Guinea" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
 </div>
 ```
 ```{tab-item} Samoa

@@ -13,75 +13,74 @@ has highlighted its potential to nowcast economic statistics, with a particular 
 Most relevantly, [Arslanalp, Koepke and Verschuur (2019)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4026426) 
 conducted a study to track daily merchandise trade at the port-level in the Pacific Islands.
 
-This branch of work will build on these initiatives by adapting and improving methodologies to derive maritime statistics 
-for the Pacific Island Countries (PICs).
+This branch of work will build on these initiatives by adapting and improving on the methodologies 
+to derive high-frequency maritime statistics for the Pacific Island Countries (PICs).
 
 ## AIS Density Map
 
-The map shows the  Exclusive Economic Zone of each PIC and their corresponding port locations.
-Hover on the location to know the country or port name. 
-The AIS density per vessel type (cargo, tankers, passengers, fishing, and others)
-can be shown by choosing the corresponding layer from the upper-right button of the map. 
+The maps show the density of AIS messages collected within the Exclusive Economic Zone of each PIC (blue line).
+The white circles point to port locations. To view the density maps, choose the layer 
+(cargo, tankers, passengers, fishing, and others) from the upper-right button of the map. 
 
 ````{tab-set}
 ``` {tab-item} Federated States of Micronesia
 <div id= "content">
-<iframe src="interactive/ais/Micronesia2023.html" name="Micronesia" id="Micronesia" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+<iframe src="../interactive/ais/Micronesia2023.html" name="Micronesia" id="Micronesia" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
 </div>
 ``` 
 ``` {tab-item} Fiji 
 <div id= "content">
-<iframe src="interactive/ais/Fiji2023.html" name="Fiji" id="Fiji" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+<iframe src="../interactive/ais/Fiji2023.html" name="Fiji" id="Fiji" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
 </div>
 ``` 
 ```{tab-item} Kiribati
 <div id= "content">
-    <iframe src="interactive/ais/Kiribati2023.html" name="Kiribati" id="Kiribati" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+    <iframe src="../interactive/ais/Kiribati2023.html" name="Kiribati" id="Kiribati" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
 </div>
 ```
 ```{tab-item} Marshall Islands
 <div id= "content">
-    <iframe src="interactive/ais/Marshall Islands2023.html" name="Marshall" id="Marshall" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+    <iframe src="../interactive/ais/Marshall Islands2023.html" name="Marshall" id="Marshall" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
 </div>
 ```
 ```{tab-item} Nauru
 <div id= "content">
-    <iframe src="interactive/ais/Nauru2023.html" name="Nauru" id="Nauru" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+    <iframe src="../interactive/ais/Nauru2023.html" name="Nauru" id="Nauru" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
 </div>
 ```
 ```{tab-item} Palau
 <div id= "content">
-    <iframe src="interactive/ais/Palau2023.html" name="Palau" id="Palau" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+    <iframe src="../interactive/ais/Palau2023.html" name="Palau" id="Palau" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
 </div>
 ```
 ```{tab-item} Papua New Guinea
 <div id= "content">
-    <iframe src="interactive/ais/Papua New Guinea 2023.html" name="Palau" id="Papua New Guinea" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+    <iframe src="../interactive/ais/Papua New Guinea 2023.html" name="Palau" id="Papua New Guinea" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
 </div>
 ```
 ```{tab-item} Samoa
 <div id= "content">
-    <iframe src="interactive/ais/Samoa2023.html" name="Samoa" id="Samoa" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+    <iframe src="../interactive/ais/Samoa2023.html" name="Samoa" id="Samoa" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
 </div>
 ```
 ```{tab-item} Solomon Islands
 <div id= "content">
-    <iframe src="interactive/ais/SolomonIslands2023.html" name="Solomon" id="Solomon" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+    <iframe src="../interactive/ais/SolomonIslands2023.html" name="Solomon" id="Solomon" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
 </div>
 ```
 ```{tab-item} Tonga
 <div id= "content">
-    <iframe src="interactive/ais/Tonga2023.html "name="Tonga" id="Tonga" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+    <iframe src="../interactive/ais/Tonga2023.html "name="Tonga" id="Tonga" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
 </div>
 ```
 ```{tab-item} Tuvalu
 <div id= "content">
-    <iframe src="interactive/ais/Tuvalu2023.html" name="Tuvalu" id="Tuvalu" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+    <iframe src="../interactive/ais/Tuvalu2023.html" name="Tuvalu" id="Tuvalu" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
 </div>
 ```
 ```{tab-item} Vanuatu
 <div id= "content">
-    <iframe src="interactive/ais/Vanuatu2023.html" name="Vanuatu" id="Vanuatu" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
+    <iframe src="../interactive/ais/Vanuatu2023.html" name="Vanuatu" id="Vanuatu" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen=""></iframe>
 </div>
 ```
 ````

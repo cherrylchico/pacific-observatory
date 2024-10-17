@@ -15,6 +15,7 @@ We used the helper functions from ais python package [[5]](#5) with some refinem
 to generate a port calls dataset. 
 
 ![Port Calls Methodology](../images/ais/pc_method.svg)
+
 The figure above presents a general overview of the methodology to capture port calls.
 The term “port buffer” refers to a large area encompassing the port, 
 with a square boundary of  22 km from the port. AIS data within the port buffer are 

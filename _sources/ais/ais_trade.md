@@ -17,10 +17,11 @@ where:
 - $\rho$ = density of salt water 
 - $c_D$ = block coefficient at draught D
 
+
 The $c_{design}$ is taken from a technical report that publishes the block
 coefficient of ships per design classification, but the classification does not easily
 map with the categories in Ship Registry. However, from the $Disp$ equation, by using the design
-displacement, design draught, length and width which are avialable in the Ship Registry, 
+displacement, design draught, length and width which are available in the Ship Registry, 
 we can derive the $c_{design}$ as follows:
 
 $$

@@ -1,33 +1,21 @@
 # Port Calls
 There is growing research on the use of Automatic Identification System (AIS) data as alternative source 
 for port and seaborne trade statistics. In recent years, the UK and US statistical agencies started publishing 
-AIS-derived maritime statistics as part of their [real-time faster economic 
-indicators for UK](https://datasciencecampus.ons.gov.uk/projects/faster-indicators-of-uk-economic-activity-improving-the-shipping-indicators/), 
-and [Covid-19 related transport statistics for US](https://www.bts.gov/freight-indicators#anchored-offshore). 
+AIS-derived maritime statistics as part of their real-time faster economic 
+indicators for UK [[1]](#1) and Covid-19 related transport statistics for US [[2]](#2). 
 For pacific island economies where official data is not 
-readily available, AIS data shows great potential to fill the gaps on  seaborne trade activities.
-
-The steps for capturing seaborne trade activities involves identifying port calls from AIS data. The next section 
-summarizes related literature for these steps.
-
-| study | Output                                | Coverage                         |Methods|
-|-------|---------------------------------------|----------------------------------|---|
-| 1, 2  | port boundary, port calls, cargo load | Global, vessels related to trade | asd|
-
-In here, we validate the use of AIS data to produce official port statistics 
-for pacific island economies, with Samoa as use case for its admin data availability (5).
-Our main data sources are the UN Global Platform (UNGP) for AIS and Ship Registry (6),
-and global port boundaries requested from the author of 
-“Tracking trade from space: an application to pacific island countries“ (4). 
-We used the helper functions from ais python package (7) with some refinements
-to generate a port calls dataset. We follow two existing methodologies on cargo
-volume estimation (4, 8, 9) to estimate the cargo carried by the vessel upon
-arrival and departure. We find that our derived port calls data accurately capture
-international trade-related ships, but cargo volume estimates are still far-off from 
-official data.
+readily available, AIS data shows great potential to fill the gaps on  
+seaborne trade activities [[3]](#3)
 
 ## Data and Methods
-Figure 1 presents the port calls methodology from the Samoa study. 
+Our main data sources are the UN Global Platform (UNGP) for AIS and Ship Registry [[4]](#4),
+and global port boundaries requested from the author of 
+“Tracking trade from space: an application to pacific island countries“[[3]](#3). 
+We used the helper functions from ais python package [[5]](#5) with some refinements
+to generate a port calls dataset. 
+
+![Port Calls Methodology](../images/ais/pc_method.svg)
+The figure above presents a general overview of the methodology to capture port calls.
 The term “port buffer” refers to a large area encompassing the port, 
 with a square boundary of  22 km from the port. AIS data within the port buffer are 
 extracted and then aggregated into routes. A route comprises consecutive AIS messages 
@@ -106,3 +94,20 @@ international voyages according to their next port calls.
 </div>
 ```
 ````
+References:
+
+<a id="1">[1]</a> Office for National Statistics (ONS). (2023, February). 
+Economic activity and social change in the UK, real-time indicators. 
+ONS website statistical bulletin.
+
+<a id="2">[2]</a> Bureau of Transportation Statistics (BTS). (2023), 
+Latest Supply Chain Indicators. BTS website. 
+
+<a id="3">[3]</a> Arslanalp S., Koepke R., and Verschuur J.. Tracking trade from space: an application to pacific island countries. IMF Working Papers, 2021(225):A001, 2021. 
+URL: https://www.elibrary.imf.org/view/journals/001/2021/225/article-A001-en.xml, 
+doi:10.5089/9781513593531.001.A001.
+
+<a id="4">[4]</a> UN Global Platform. https://www.officialstatistics.org/
+
+<a id="5">[5]</a> AIS Task Team. (2022). AIS python package (Version 2.8.1) 
+[Source Code]. https://code.officialstatistics.org/trade-task-team-phase-1/ais

@@ -64,6 +64,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'ais/ais_trade';</script>
     <link rel="canonical" href="https://github.com/worldbank/pacific-observatory/ais/ais_trade.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -429,7 +431,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -445,6 +449,14 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methods">Methods</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -456,6 +468,49 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="maritime-trade">
 <h1>Maritime Trade<a class="headerlink" href="#maritime-trade" title="Permalink to this heading">#</a></h1>
+<section id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading">#</a></h2>
+<p>To estimate the trade volume, we refer to the ship’s dimension and reported changes in draught
+during port calls. From Arslanalp, et. al (2021), vessels that contribute to trade in the
+PICs are from container ships, cargo carriers, and bulk carriers.</p>
+<div class="math notranslate nohighlight">
+\[   Load_{reported} = Disp_{reported} - Disp_{design} + DWT  \]</div>
+<div class="math notranslate nohighlight">
+\[ Disp = L \times W \times D \times \rho \times c_D  \]</div>
+<p>where:</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(D_{reported}\)</span> = draught of the ship at report time</p></li>
+<li><p><span class="math notranslate nohighlight">\(D_{design}\)</span> = design draught or maximum possible draught, constant per ship</p></li>
+<li><p><span class="math notranslate nohighlight">\(DWT\)</span> = deadweight tonnage or total load capacity, constant per ship</p></li>
+<li><p><span class="math notranslate nohighlight">\(L\)</span> = length of the ship</p></li>
+<li><div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}W$ = width of the ship 
+- $\rho$ = density of salt water 
+- $c_D$ = block coefficient at draught D\\The $c_{design}$ is taken from a technical report that publishes the block
+coefficient of ships per design classification, but the classification does not easily
+map with the categories in Ship Registry. However, from the $Disp$ equation, by using the design
+displacement, design draught, length and width which are avialable in the Ship Registry, 
+we can derive the $c_{design}$ as follows:\end{aligned}\end{align} \]</div>
+</li>
+</ul>
+<p>c_{Ddesign} = \frac {Disp_{design}}{L \times W \times D_{design} \times \rho}
+$$</p>
+<p>Fuel tankers are excluded as they are mostly involved in re-exportation or transshipment.
+In addition, vessels in transit, which are defined as those spending less than 5 hours
+in the port and without any changes in draft between the current and next port, are also
+excluded.</p>
+<p>To determine the trade flow, the difference in the cargo volume on arrival and on
+departure was calculated. If there was no difference in volume, it was assumed that
+the draught value was not accurately reported. In such cases, the trade flow was replaced
+by the historical average net cargo volume of the vessel for that specific port.
+Finally, imports were identified as those where trade flow is less than 0, indicating
+that the departure cargo volume is lower than the arrival cargo volume, and exports were
+those where trade flow is higher than 0.</p>
+<div class="math notranslate nohighlight">
+\[ 
+Net Cargo = Load_{departure} - Load_{arrival}
+\]</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -512,6 +567,21 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methods">Methods</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

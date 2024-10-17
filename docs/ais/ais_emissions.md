@@ -3,14 +3,14 @@
 <div>
 <iframe src="../interactive/ais/emissions/Yearly CO2 emissions by Country and Vessel Type.html" name="YearlyEmissions" id="YearlyEmissions" 
 frameborder="0" marginwidth="0" marginheight="0" allowfullscreen="" 
-width="700" height="100">
+width="700" height="1000">
 </iframe>
 </div>
 
 ## Emissions from Fishing Vessels
 ````{tab-set}
 ``` {tab-item} Federated States of Micronesia
-<div style="height=250px width=100px">
+<div style="height=250px width=250px">
 <iframe src="../interactive/ais/emissions/Micronesia Monthly CO2 vs VDS.html" name="Micronesia" id="Micronesia" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen="" height="600"></iframe>
 </div>
 ``` 

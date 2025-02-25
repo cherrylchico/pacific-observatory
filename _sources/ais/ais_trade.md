@@ -1,46 +1,33 @@
-# Maritime Trade
+# Port Arrivals and Trade Volume
 
-## Methods
-To estimate the trade volume, we refer to the ship’s dimension and reported changes in draught
-during port calls. From Arslanalp, et. al (2021), vessels that contribute to trade in the 
-PICs are from container ships, cargo carriers, and bulk carriers. 
+This page showcases results from our paper **Estimating Trade Volume in the Pacific Islands using Automatic Identification System (AIS)**, where we validate the use of AIS data to produce port-level statistics for the Pacific Islands. The paper is available [link]. 
 
-$$   Load_{reported} = Disp_{reported} - Disp_{design} + DWT  $$
-$$ Disp = L \times W \times D \times \rho \times c_D  $$
+This study covers Fiji, Kiribati, Marshall Islands, Micronesia, Nauru, Palau, Papua New Guinea, Samoa, Solomon Islands, Tonga, Tuvalu, and Vanuatu. The primary data sources are AIS data and ship registry from the UN Global Platform (UNGP), and global port boundaries from the {cite:t}`Arslanalp2021` study. The period covered by this study is from January 2019 to April 2023.
 
-where:
-- $D_{reported}$ = draught of the ship at report time
-- $D_{design}$ = design draught or maximum possible draught, constant per ship 
-- $DWT$ = deadweight tonnage or total load capacity, constant per ship 
-- $L$ = length of the ship 
-- $$W$ = width of the ship 
-- $\rho$ = density of salt water 
-- $c_D$ = block coefficient at draught D
+We follow two existing methodologies on trade volume estimation ({cite:t}`Arslanalp2021`; {cite:t}`Jia2019`) to estimate the cargo carried by each vessel upon arrival and departure. These papers utilize dynamic information on ship movements, static characteristics of each ship, and reported draft (depth of submergence), to estimate the amount of goods offloaded or loaded at a certain port. We find that our derived port calls data accurately capture international trade-related ships, and whilst cargo volume levels are off from official data, they can still capture variation across ports and relative trends within each port.
 
+## Map of Ports
 
-The $c_{design}$ is taken from a technical report that publishes the block
-coefficient of ships per design classification, but the classification does not easily
-map with the categories in Ship Registry. However, from the $Disp$ equation, by using the design
-displacement, design draught, length and width which are available in the Ship Registry, 
-we can derive the $c_{design}$ as follows:
+The map below shows the location of each port and the buffer area (22 km) used to extract AIS data.
 
-$$
-c_{Ddesign} = \frac {Disp_{design}}{L \times W \times D_{design} \times \rho}
-$$
+<div id="content" style="max-width: 100%; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="../interactive/ais/PacificIslandsMap.html" name="Pacific Islands Map" id="Pacific Islands Map" style="border: 0; position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen="">
+  </iframe>
+</div>
 
-Fuel tankers are excluded as they are mostly involved in re-exportation or transshipment. 
-In addition, vessels in transit, which are defined as those spending less than 5 hours 
-in the port and without any changes in draft between the current and next port, are also 
-excluded. 
+## Port Arrivals 
 
-To determine the trade flow, the difference in the cargo volume on arrival and on 
-departure was calculated. If there was no difference in volume, it was assumed that 
-the draught value was not accurately reported. In such cases, the trade flow was replaced 
-by the historical average net cargo volume of the vessel for that specific port. 
-Finally, imports were identified as those where trade flow is less than 0, indicating 
-that the departure cargo volume is lower than the arrival cargo volume, and exports were 
-those where trade flow is higher than 0.
+<div class="flourish-embed flourish-chart" data-src="visualisation/19836784?2274258"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/19836784/thumbnail" width="100%" alt="chart visualization" /></noscript></div>
 
-$$ 
-Net Cargo = Load_{departure} - Load_{arrival}
-$$
+## Trade Volume
+
+<div class="flourish-embed flourish-chart" data-src="visualisation/19837444?2274258"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/19837444/thumbnail" width="100%" alt="chart visualization" /></noscript></div>
+
+## Data Availability
+
+The output data from this analysis is publicly available through the [Development Data Catalog](https://datacatalog.worldbank.org/search/dataset/0062856/Pacific%20Observatory%20Datasets?version=6).
+
+## References
+
+```{bibliography}
+```

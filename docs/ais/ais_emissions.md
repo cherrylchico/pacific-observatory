@@ -71,17 +71,29 @@ Where
 
 ## Data Exploration
 
-AIS data is extracted by Exclusive Economic Zones (EEZ) from 2019 to May 2024. The charts below show the number of unique vessels per month for each economic zone.
+AIS data is extracted by Exclusive Economic Zones (EEZ) from 2009 to latest available data. The charts below show the number of unique vessels per month for each economic zone.
 
 <div class="flourish-embed flourish-chart" data-src="visualisation/19738193?2274258"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/19738193/thumbnail" width="100%" alt="chart visualization" /></noscript></div>
 
 For each vessel journey, we calculate the total emissions of various GHG components. The below summarizes monthly CO2 emissions by type of vessel (Cargo, Tanker, Fishing, Passenger, or Other). Toggle the area of interest to explore emissions by country.
 
-<div class="flourish-embed flourish-chart" data-src="visualisation/19744172?2274258"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/19744172/thumbnail" width="100%" alt="chart visualization" /></noscript></div>
+<div style="width: 100%; max-width: 800px; margin: 0 auto;">
+  <iframe src="../interactive/ais/co2 country vessel type.html"
+          frameborder="0"
+          scrolling="no"
+          style="width: 100%; height: 650px;">
+  </iframe>
+</div>
 
 The following grid expresses the same data as a stacked bar chart to explore the share of emissions produced by each vessel type.
 
-<div class="flourish-embed flourish-chart" data-src="visualisation/19757891?2274258"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/19757891/thumbnail" width="100%" alt="chart visualization" /></noscript></div>
+<div style="width: 100%; max-width: 800px; margin: 0 auto;">
+  <iframe src="../interactive/ais/co2 stacked bars.html"
+          frameborder="0"
+          scrolling="no"
+          style="width: 100%;">
+  </iframe>
+</div>
 
 Similarly, the tree map below shows the annual composition of CO2 emissions across areas and vessel types.
 

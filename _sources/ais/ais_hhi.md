@@ -10,7 +10,7 @@ Here, the market share is defined by the share of port calls from an operator. W
 
 ## HHI per Country and Vessel Category
 
-The following graph displays the latest and 2009 HHI values for each country and vessel category The countries are ranked from highest (most concentrated) to lowest (most competitive) latest HHI.
+The following graph displays the latest and 2009 HHI values for each country and vessel category. The countries are ranked from highest (most concentrated) to lowest (most competitive) latest HHI.
 
 <div style="width: 100%; max-width: 800px; margin: 0 auto;">
   <iframe src="../interactive/ais/hhi-compare.html"

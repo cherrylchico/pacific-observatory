@@ -91,13 +91,19 @@ The following grid expresses the same data as a stacked bar chart to explore the
   <iframe src="../interactive/ais/co2 stacked bars.html"
           frameborder="0"
           scrolling="no"
-          style="width: 100%;">
+          style="width: 100%;height: 800px">
   </iframe>
 </div>
 
 Similarly, the tree map below shows the annual composition of CO2 emissions across areas and vessel types.
 
-<div class="flourish-embed flourish-hierarchy" data-src="visualisation/19770754?2274258"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/19770754/thumbnail" width="100%" alt="hierarchy visualization" /></noscript></div>
+<div style="width: 100%; max-width: 800px; margin: 0 auto;">
+  <iframe src="../interactive/ais/co2 treemap.html"
+          frameborder="0"
+          scrolling="no"
+          style="width: 100%;height: 800px">
+  </iframe>
+</div>
 
 We also calculate emissions for other GHG and pollutants, including Particulate Matter and Methane. Each line in this chart represents total monthly emissions for a specific pollutant.
 

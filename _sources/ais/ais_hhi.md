@@ -18,4 +18,12 @@ The following graph displays the latest HHI values for each country and vessel c
 
 This second graph shows the changes in HHI values for each country and vessel category from 2009 to 2024.
 
-<div class="flourish-embed flourish-scatter" data-src="visualisation/22102411?2274258"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/22102411/thumbnail" width="100%" alt="scatter visualization" /></noscript></div>
+<div style="width: 100%; max-width: 800px; margin: 0 auto;">
+  <iframe src="../interactive/ais/hhi-compare.html"
+          frameborder="0"
+          scrolling="no"
+          style="width: 100%; height: 650px;">
+  </iframe>
+</div>
+
+

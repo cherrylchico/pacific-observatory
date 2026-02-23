@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Monthly CO2 Emissions</title>
+  <title>GHG Emissions by Country</title>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
   <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
@@ -89,7 +89,7 @@
     margin: 0;
     font-family: 'Open Sans', sans-serif;
   ">
-    CO2 Emissions by Vessel Type
+    Emissions by Pollutant
   </h2>
   <p id="chartSubtitle" style="
     font-size: 16px;
@@ -97,33 +97,41 @@
     margin: 4px 0 0;
     font-family: 'Open Sans', sans-serif;
   ">
-   CO2 Equivalent (in tons), Monthly
-   </p>
+    Emissions (in million tons), Monthly
+  </p>
 </div>
 
 <div id="filterContainer">
-  <div class="filter-row">
-    <select id="countrySelect"></select>
-  </div>
-  <div class="filter-row">
-    <div class="time-buttons">
-      <button class="time-btn" data-years="1">1Y</button>
-      <button class="time-btn" data-years="3">3Y</button>
-      <button class="time-btn" data-years="5">5Y</button>
-      <button class="time-btn active" data-years="all">All</button>
+    <div class="filter-row">
+      <select id="countrySelect"></select>
+    </div>
+    <div class="filter-row">
+      <div class="scale-buttons">
+        <button class="time-btn scale-btn active" data-scale="linear">Linear</button>
+        <button class="time-btn scale-btn" data-scale="log">Log</button>
+      </div>
+    </div>
+    <div class="filter-row">
+      <div class="time-buttons">
+        <button class="time-btn" data-years="1">1Y</button>
+        <button class="time-btn" data-years="3">3Y</button>
+        <button class="time-btn" data-years="5">5Y</button>
+        <button class="time-btn active" data-years="all">All</button>
+      </div>
     </div>
   </div>
 </div>
 
-  <div id="chart" style="width:100%;position:relative;"></div>
+<div id="chart" style="width:100%;position:relative;"></div>
+  
   <div id="footer" style="
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
-  color: #888;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    color: #888;
   ">
     <div style="margin-bottom:10px;">
       Source: <a href="https://www.worldbank.org" target="_blank" style="text-decoration: underline; color: #888;">World Bank Group</a>
@@ -132,25 +140,32 @@
   </div>
 
   <script>
+    const ghgTypes = [
+      "BC",
+      "SOX",
+      "CO2",
+      "NOX",
+      "PM2.5",
+      "PM10",
+      "NMVOC",
+      "N2O",
+      "CO",
+      "CH4"
+    ];
+    
     let fullData = [];
 
-    Papa.parse("https://raw.githubusercontent.com/cherrylchico/pacific-observatory-ais-data/main/data/Monthly%20CO2%20by%20Country%20Vessel%20Type.csv", {
+    Papa.parse("data/Monthly GHG by Country.csv", {
       download: true,
       header: true,
       skipEmptyLines: true,
       complete: function(results) {
-        console.log("Data loaded:", results.data.length, "rows");
         fullData = results.data.filter(d =>
-          d["Vessel Type"] &&
           d.Country &&
-          d.CO2eq &&
-          !isNaN(parseFloat(d.CO2eq))
+          d.year &&
+          d.month
         );
-        console.log("Filtered data:", fullData.length, "rows");
         populateCountryDropdown();
-      },
-      error: function(error) {
-        console.error("Error loading data:", error);
       }
     });
 
@@ -174,8 +189,17 @@
       countrySelect.addEventListener("change", updateChart);
       countrySelect.value = "__ALL__";
       
-      // Add event listeners for time buttons
-      const timeButtons = document.querySelectorAll(".time-btn");
+      // Add event listeners for scale and time buttons
+      const scaleButtons = document.querySelectorAll(".scale-btn");
+      scaleButtons.forEach(btn => {
+        btn.addEventListener("click", function() {
+          scaleButtons.forEach(b => b.classList.remove("active"));
+          this.classList.add("active");
+          updateChart();
+        });
+      });
+      
+      const timeButtons = document.querySelectorAll(".time-btn:not(.scale-btn)");
       timeButtons.forEach(btn => {
         btn.addEventListener("click", function() {
           timeButtons.forEach(b => b.classList.remove("active"));
@@ -189,7 +213,9 @@
 
     function updateChart() {
       const selectedCountry = document.getElementById("countrySelect").value;
-      const activeTimeBtn = document.querySelector(".time-btn.active");
+      const activeScaleBtn = document.querySelector(".scale-btn.active");
+      const selectedScale = activeScaleBtn ? activeScaleBtn.dataset.scale : "linear";
+      const activeTimeBtn = document.querySelector(".time-btn:not(.scale-btn).active");
       const selectedYears = activeTimeBtn ? activeTimeBtn.dataset.years : "all";
 
       let filtered = fullData;
@@ -197,6 +223,12 @@
       if (selectedCountry !== "__ALL__") {
         filtered = filtered.filter(d => d.Country === selectedCountry);
       }
+
+      // Sort by year and month to ensure proper ordering
+      filtered.sort((a, b) => {
+        if (a.year !== b.year) return a.year - b.year;
+        return parseInt(a.month) - parseInt(b.month);
+      });
 
       // Apply time range filter
       if (selectedYears !== "all" && filtered.length > 0) {
@@ -217,91 +249,45 @@
         });
       }
 
-      // Get all unique year-month combinations
-      const yearMonthSet = new Set();
-      filtered.forEach(d => {
-        if (d.year && d.month) {
-          yearMonthSet.add(`${d.year}-${String(d.month).padStart(2, '0')}`);
-        }
-      });
-      const yearMonths = Array.from(yearMonthSet).sort();
+      const traces = ghgTypes.map(ghg => {
+        const aggregated = {};
 
-      // Get all unique vessel types in the filtered data
-      const availableVesselTypes = [...new Set(filtered.map(d => d["Vessel Type"]))].sort();
-      
-      console.log("Available vessel types:", availableVesselTypes);
-      console.log("Year-months:", yearMonths.length);
-      
-      // Create a trace for each vessel type
-      const traces = availableVesselTypes.map(vesselType => {
-        const x = [];
-        const y = [];
+        filtered.forEach(row => {
+          const year = row.year;
+          const month = String(row.month).padStart(2, '0');
+          const dateKey = `${year}-${month}`;
+          const value = parseFloat(row[ghg]) || 0;
 
-        yearMonths.forEach(yearMonth => {
-          const [year, month] = yearMonth.split('-');
-          const entries = filtered.filter(d =>
-            d.year == year &&
-            parseInt(d.month) == parseInt(month) &&
-            d["Vessel Type"] === vesselType
-          );
-          const total = entries.reduce((sum, d) => sum + parseFloat(d.CO2eq), 0);
-          
-          x.push(yearMonth);
-          y.push(total);
+          if (!aggregated[dateKey]) {
+            aggregated[dateKey] = 0;
+          }
+          aggregated[dateKey] += value;
         });
+
+        const sortedDates = Object.keys(aggregated).sort();
+        const x = sortedDates;
+        const y = sortedDates.map(date => aggregated[date]);
 
         return {
           x: x,
           y: y,
-          name: vesselType,
-          type: 'bar',
-          marker: {
-            line: {
-              width: 0
-            }
-          }
+          name: ghg,
+          type: 'scatter',
+          mode: 'lines'
         };
       });
 
-      // Add a line trace showing the total
-      const totalTrace = {
-        x: [],
-        y: [],
-        name: 'Total',
-        type: 'scatter',
-        mode: 'lines',
-        line: {
-          color: '#888',
-          width: 2
-        },
-        yaxis: 'y'
-      };
-
-      yearMonths.forEach(yearMonth => {
-        const [year, month] = yearMonth.split('-');
-        const entries = filtered.filter(d =>
-          d.year == year &&
-          parseInt(d.month) == parseInt(month)
-        );
-        const total = entries.reduce((sum, d) => sum + parseFloat(d.CO2eq), 0);
-        
-        totalTrace.x.push(yearMonth);
-        totalTrace.y.push(total);
-      });
-
-      traces.push(totalTrace);
-
       const layout = {
         autosize: true,
-        barmode: 'stack',
         margin: {
           l: 40,
           r: 20,
-          t: 10,
+          t: 50,
           b: 0
         },
         yaxis: {
-          title: '',
+          type: selectedScale,
+          dtick: selectedScale === 'log' ? 1 : undefined,
           showline: true,
           linecolor: '#ccc',
           griddash: 'dot',
@@ -323,7 +309,9 @@
         legend: {
           orientation: 'h',
           x: 0,
-          y: 1,
+          y: 1.1,
+          xanchor: 'left',
+          yanchor: 'bottom'
         },
         hoverlabel: {
           font: { family: 'Open Sans, sans-serif' }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Monthly CO2 Emissions by Vessel Type</title>
+  <title>Unique Vessels by Vessel Type</title>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
   <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
@@ -103,8 +103,8 @@
 <body>
 
 <div id="titleRow">
-  <h2>CO2 Emissions by Vessel Type</h2>
-  <p>CO2 Equivalent (in tons, % of total), Monthly</p>
+  <h2>Unique Vessels by Vessel Type</h2>
+  <p>Number of Unique Vessels, Monthly</p>
 </div>
 
 <div id="filterContainer">
@@ -160,9 +160,12 @@
     header: true,
     skipEmptyLines: true,
     complete: function(results) {
+      console.log("Raw data loaded:", results.data.length);
       fullData = results.data.filter(d =>
-        d.year && d.month && d.Country && d["Vessel Type"] && d.CO2eq
+        d.year && d.month && d.Country && d["Vessel Type"] && d.Vessel && !isNaN(parseInt(d.Vessel))
       );
+      console.log("Filtered data:", fullData.length);
+      console.log("Sample row:", fullData[0]);
       
       // Get unique countries and time points
       allCountries = [...new Set(fullData.map(d => d.Country))].sort();
@@ -185,7 +188,11 @@
       
       // Initialize charts
       initCharts();
+      createLegend();
       updateAllCharts();
+    },
+    error: function(error) {
+      console.error("Error loading CSV:", error);
     }
   });
 
@@ -226,9 +233,6 @@
   }
 
   function updateAllCharts() {
-    // Create legend
-    createLegend();
-    
     // Update "All Countries" chart
     updateChart('chart-all', 'All Countries', fullData);
     
@@ -254,11 +258,6 @@
       item.style.alignItems = 'center';
       item.style.gap = '5px';
       item.dataset.vesselType = vt;
-      
-      // Apply disabled state if needed
-      if (!visibleVesselTypes[vt]) {
-        item.classList.add('disabled');
-      }
       
       const colorBox = document.createElement('div');
       colorBox.style.width = '15px';
@@ -291,21 +290,28 @@
       legendItem.classList.add('disabled');
     }
     
-    // Recalculate and update all charts with new percentages
+    // Update all charts
     const topCountries = allCountries.slice(0, 15);
-    topCountries.forEach((country, index) => {
-      const countryData = fullData.filter(d => d.Country === country);
-      updateChart(`chart-${country.replace(/\s+/g, '-')}`, country, countryData);
+    const allChartIds = ['chart-all', ...topCountries.map(c => `chart-${c.replace(/\s+/g, '-')}`)];
+    
+    const traceIndex = vesselTypes.indexOf(vesselType);
+    const visible = visibleVesselTypes[vesselType];
+    
+    allChartIds.forEach(chartId => {
+      const chartDiv = document.getElementById(chartId);
+      if (chartDiv && chartDiv.data) {
+        Plotly.restyle(chartId, { visible: visible }, [traceIndex]);
+      }
     });
-    updateChart('chart-all', 'All Countries', fullData);
   }
 
   function updateChart(divId, title, data) {
-    // Create traces for 100% stacked bar chart
+    console.log(`Updating chart ${divId} with ${data.length} data rows, ${timePoints.length} time points`);
+    
+    // Create traces for stacked bar chart
     const traces = vesselTypes.map(vt => {
-      const percentages = [];
+      const vesselCounts = [];
       const xLabels = [];
-      const absoluteValues = [];
       
       timePoints.forEach(tp => {
         const [year, month] = tp.split('-');
@@ -320,35 +326,30 @@
         vesselTypes.forEach(v => {
           totals[v] = timeData
             .filter(d => d["Vessel Type"] === v)
-            .reduce((sum, d) => sum + parseFloat(d.CO2eq || 0), 0);
+            .reduce((sum, d) => sum + parseInt(d.Vessel || 0), 0);
         });
         
-        // Calculate grandTotal based only on visible vessel types
-        const grandTotal = vesselTypes
-          .filter(v => visibleVesselTypes[v])
-          .reduce((sum, v) => sum + totals[v], 0);
-        
-        const percentage = grandTotal > 0 ? (totals[vt] / grandTotal) * 100 : 0;
-        
-        percentages.push(percentage);
+        vesselCounts.push(totals[vt]);
         xLabels.push(tp);
-        absoluteValues.push(totals[vt]);
       });
       
       return {
         x: xLabels,
-        y: percentages,
+        y: vesselCounts,
         name: vt,
         type: 'bar',
         visible: visibleVesselTypes[vt],
         marker: {
           color: colors[vt]
         },
-        hovertemplate: `%{x}<br>${vt}: %{y:.1f}%<br>CO2: %{customdata:,.0f} tonnes<extra></extra>`,
-        customdata: absoluteValues,
-        showlegend: false
+        hovertemplate: `%{x}<br>${vt}: %{y:,.0f} vessels<extra></extra>`
       };
     });
+    
+    console.log(`Chart ${divId} has ${traces.length} traces, first trace has ${traces[0].y.length} data points`);
+    if (traces[0].y.length > 0) {
+      console.log(`First trace sample data:`, traces[0].y.slice(0, 5));
+    }
     
     const layout = {
       title: {
@@ -368,7 +369,6 @@
         tickcolor: '#ccc'
       },
       yaxis: {
-        range: [0, 100],
         showticklabels: true,
         showgrid: true,
         griddash: 'dot',
@@ -376,8 +376,7 @@
         showline: true,
         linecolor: '#ccc',
         ticks: 'outside',
-        tickcolor: '#ccc',
-        ticksuffix: '%'
+        tickcolor: '#ccc'
       },
       margin: {
         l: 40,

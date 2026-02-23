@@ -73,7 +73,14 @@ Where
 
 AIS data is extracted by Exclusive Economic Zones (EEZ) from 2009 to latest available data. The charts below show the number of unique vessels per month for each economic zone.
 
-<div class="flourish-embed flourish-chart" data-src="visualisation/19738193?2274258"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/19738193/thumbnail" width="100%" alt="chart visualization" /></noscript></div>
+<div style="width: 100%; max-width: 800px; margin: 0 auto;">
+  <iframe src="../interactive/ais/co2 stacked bars unique vessels.html"
+          frameborder="0"
+          scrolling="no"
+          style="width: 100%; height: 650px;">
+  </iframe>
+</div>
+
 
 For each vessel journey, we calculate the total emissions of various GHG components. The below summarizes monthly CO2 emissions by type of vessel (Cargo, Tanker, Fishing, Passenger, or Other). Toggle the area of interest to explore emissions by country.
 
@@ -107,7 +114,14 @@ Similarly, the tree map below shows the annual composition of CO2 emissions acro
 
 We also calculate emissions for other GHG and pollutants, including Particulate Matter and Methane. Each line in this chart represents total monthly emissions for a specific pollutant.
 
-<div class="flourish-embed flourish-chart" data-src="visualisation/19771256?2274258"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/19771256/thumbnail" width="100%" alt="chart visualization" /></noscript></div>
+<div style="width: 100%; max-width: 800px; margin: 0 auto;">
+  <iframe src="../interactive/ais/ghg by country.html"
+          frameborder="0"
+          scrolling="no"
+          style="width: 100%; height: 650px;">
+  </iframe>
+</div>
+
 
 ## Data Availability
 

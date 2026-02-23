@@ -53,16 +53,21 @@
 <body>
   <div id="titleRow" style="margin-bottom: 10px;">
     <h2>HHI by Country</h2>
-    <p class="subtitle">2009 vs 2025 Average (Jan - Nov)</p>
+    <p class="subtitle" id="subtitle">HHI, Yearly</p>
   </div>
 
-  <label for="categorySelect">Vessel Category:</label>
   <select id="categorySelect">
     <option value="Cargo">Cargo</option>
     <option value="Fishing">Fishing</option>
     <option value="Passenger">Passenger</option>
     <option value="Tanker">Tanker</option>
   </select>
+
+
+  <select id="pastSelect"></select>
+
+
+  <select id="currentSelect"></select>
 
   <div id="chart"></div>
   
@@ -83,7 +88,9 @@
 
   <script>
     let allData = [];
-    let csvHeaders = { past: 'Past', current: 'Current' }; // Store actual CSV column names
+    let availableYears = []; // Store all year columns
+    let selectedPast = '';
+    let selectedCurrent = '';
     
     // Load and parse the CSV, then render chart
     fetch('https://raw.githubusercontent.com/cherrylchico/pacific-observatory-ais-data/main/data/hhi%20compare.csv')
@@ -93,33 +100,51 @@
       })
       .then(function(csvText) {
         var parsed = parseCSV(csvText);
-        csvHeaders = parsed.headers; // Store the actual header names FIRST
-        allData = normalizeData(parsed.rows);
-        renderChart('Cargo');
+        availableYears = parsed.yearColumns;
+        allData = parsed.rows;
         
-        // Attach dropdown listener
-        document.getElementById('categorySelect').addEventListener('change', function(e) {
-          renderChart(e.target.value);
+        // Set default values
+        selectedPast = availableYears[0] || '';  // First year (2009)
+        selectedCurrent = availableYears[availableYears.length - 1] || '';  // Last year (2025 Ave)
+        
+        // Populate dropdowns
+        populateDropdowns();
+        
+        // Render initial chart
+        renderChart();
+        
+        // Attach dropdown listeners
+        document.getElementById('categorySelect').addEventListener('change', renderChart);
+        document.getElementById('pastSelect').addEventListener('change', function(e) {
+          selectedPast = e.target.value;
+          renderChart();
+        });
+        document.getElementById('currentSelect').addEventListener('change', function(e) {
+          selectedCurrent = e.target.value;
+          renderChart();
         });
       })
       .catch(function(err) {
         console.error('Error loading CSV:', err);
-        document.querySelector('.subtitle').innerHTML = '<span style="color: red;">Error loading data: ' + err.message + '</span>';
+        document.getElementById('subtitle').innerHTML = '<span style="color: red;">Error loading data: ' + err.message + '</span>';
       });
 
     function parseCSV(text) {
       var lines = text.split('\n').filter(function(line) { return line.trim(); });
-      if (lines.length < 2) return { rows: [], headers: { past: 'Past', current: 'Current' } };
+      if (lines.length < 2) return { rows: [], yearColumns: [] };
       
-      var headers = lines[0].split(',').map(function(h) { return h.trim().replace(/^"|"$/g, ''); });
+      // Parse headers as strings
+      var headers = lines[0].split(',').map(function(h) { 
+        return String(h.trim().replace(/^"|"$/g, '')); 
+      });
+      
+      // Extract year columns (all columns except "Vessel Category" and "Country")
+      var yearColumns = headers.filter(function(h) {
+        return h !== 'Vessel Category' && h !== 'Country';
+      });
+      
+      // Parse rows
       var rows = [];
-      
-      // Find the actual column names for past and current
-      var headerNames = {
-        past: headers[2] || 'Past',      // 3rd column (index 2)
-        current: headers[3] || 'Current'  // 4th column (index 3)
-      };
-      
       for (var i = 1; i < lines.length; i++) {
         var values = lines[i].split(',').map(function(v) { return v.trim(); });
         var obj = {};
@@ -128,7 +153,32 @@
         });
         rows.push(obj);
       }
-      return { rows: rows, headers: headerNames };
+      
+      return { rows: rows, yearColumns: yearColumns };
+    }
+
+    function populateDropdowns() {
+      var pastSelect = document.getElementById('pastSelect');
+      var currentSelect = document.getElementById('currentSelect');
+      
+      // Clear existing options
+      pastSelect.innerHTML = '';
+      currentSelect.innerHTML = '';
+      
+      // Populate both dropdowns with year options
+      availableYears.forEach(function(year) {
+        var option1 = document.createElement('option');
+        option1.value = year;
+        option1.text = year;
+        if (year === selectedPast) option1.selected = true;
+        pastSelect.appendChild(option1);
+        
+        var option2 = document.createElement('option');
+        option2.value = year;
+        option2.text = year;
+        if (year === selectedCurrent) option2.selected = true;
+        currentSelect.appendChild(option2);
+      });
     }
 
     function stripQuotes(s) {
@@ -149,20 +199,24 @@
       return isNaN(n) ? NaN : n;
     }
 
-    function normalizeData(rows) {
-      return rows.map(function(r) {
-        var country = toStr(r.Country);
-        var category = toStr(r.Category);
-        var past     = toNum(r[csvHeaders.past]);
-        var current  = toNum(r[csvHeaders.current]);
-        return { country: country, category: category, current: current, past: past };
-      });
-    }
+    function renderChart() {
+      var selectedCategory = document.getElementById('categorySelect').value;
+      
+      // Filter and normalize data based on current selections
+      var subset = allData
+        .filter(function(r) {
+          return toStr(r['Vessel Category']).toLowerCase() === selectedCategory.toLowerCase();
+        })
+        .map(function(r) {
+          return {
+            country: toStr(r.Country),
+            past: toNum(r[selectedPast]),
+            current: toNum(r[selectedCurrent])
+          };
+        });
 
-    function renderChart(selectedCategory) {
-      var subset = allData.filter(function(d) {
-        return d.category.toLowerCase() === selectedCategory.toLowerCase();
-      });
+      // Update subtitle
+      // document.getElementById('subtitle').textContent = 'Yearly HHI: '+selectedPast + ' vs ' + selectedCurrent;
 
       // Sort by current value descending (highest to lowest), handle NaN values
       subset.sort(function(a, b) { 
@@ -217,11 +271,11 @@
             mode: 'markers',
             x: [d.past],
             y: [d.country],
-            marker: { size: getMarkerSize(d.past), color: colors.past, symbol: 'circle', opacity: 0.8 },
-            name: csvHeaders.past,
+            marker: { size: getMarkerSize(d.past)*1.5, color: colors.past, symbol: 'circle', opacity: 0.8 },
+            name: selectedPast,
             showlegend: !legendAdded.past,
-            legendgroup: csvHeaders.past,
-            hovertemplate: '<b>%{y}</b><br>' + csvHeaders.past + ': %{x:.2f}<extra></extra>'
+            legendgroup: selectedPast,
+            hovertemplate: '<b>%{y}</b><br>' + selectedPast + ': %{x:.2f}<extra></extra>'
           });
           legendAdded.past = true;
         }
@@ -233,11 +287,11 @@
             mode: 'markers',
             x: [d.current],
             y: [d.country],
-            marker: { size: getMarkerSize(d.current), color: colors.current, symbol: 'circle', opacity: 0.8 },
-            name: csvHeaders.current,
+            marker: { size: getMarkerSize(d.current)*1.5, color: colors.current, symbol: 'circle', opacity: 0.8 },
+            name: selectedCurrent,
             showlegend: !legendAdded.current,
-            legendgroup: csvHeaders.current,
-            hovertemplate: '<b>%{y}</b><br>' + csvHeaders.current + ': %{x:.2f}<extra></extra>'
+            legendgroup: selectedCurrent,
+            hovertemplate: '<b>%{y}</b><br>' + selectedCurrent + ': %{x:.2f}<extra></extra>'
           });
           legendAdded.current = true;
         }
@@ -248,9 +302,9 @@
         return !isNaN(d.past) && !isNaN(d.current);
       }).map(function(d) {
         return {
-          x: d.past,
+          x: d.current,
           y: d.country,
-          ax: d.current,
+          ax: d.past,
           ay: d.country,
           xref: 'x',
           yref: 'y',
@@ -277,6 +331,7 @@
           title: 'HHI', 
           zeroline: true, 
           range: [0, Math.max(1, maxVal * 1.05)],
+          dtick: 0.1,
           showgrid: true,
           gridcolor: '#ccc',
           showline: true,

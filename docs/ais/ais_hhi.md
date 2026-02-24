@@ -1,8 +1,9 @@
 # Market concentration of vessel operators
 Market concentration among vessel operators in Pacific Island countries can be analyzed using the Herfindahl-Hirschman Index (HHI):
-$$
-HHI =  \sum s_i^2 
-$$
+
+```{math}
+HHI = \sum s_i^2
+```
 
 Where $s_i$ is the  market share of operator $i$. HHI value close to 0 indicates near perfect competition, while HHI value close to 1 indicates monopoly. 
 

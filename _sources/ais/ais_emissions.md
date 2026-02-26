@@ -133,7 +133,7 @@ The dataset contains the following fields.
 
 | Field                   | Definition                                                                                              |
 |-------------------------|---------------------------------------------------------------------------------------------------------|
-| Country                 | Indonesia                                                                                               |
+| Country                 | Exclusive Economic Zone                                                                                              |
 | year                    | year                                                                                                    |
 | month                   | month                                                                                                   |
 | type                    | Type 1&2 - with Ship Register data, Type 3 - without Ship Register data                                 |

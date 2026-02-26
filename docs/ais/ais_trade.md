@@ -19,17 +19,13 @@ $$ (cdesign)
 
 We get the difference between the departure and arrival displacements to get the estimate of volume of cargo loaded/unloaded. If the net displacement is positive, it is assumed that the cargo for exports, and for imports otherwise. 
 
-## Port Arrivals 
-
 <div style="width: 100%; max-width: 800px; margin: 0 auto;">
   <iframe src="../interactive/ais/port calls.html"
           frameborder="0"
           scrolling="no"
-          style="width: 100%; height: 650px;">
+          style="width: 100%; height: 640px;">
   </iframe>
 </div>
-
-## Trade Volume
 
 <div style="width: 100%; max-width: 800px; margin: 0 auto;">
   <iframe src="../interactive/ais/trade volume stacked bars.html"

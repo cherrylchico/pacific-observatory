@@ -77,7 +77,7 @@ AIS data is extracted by Exclusive Economic Zones (EEZ) from 2009 to latest avai
   <iframe src="../interactive/ais/co2 stacked bars unique vessels.html"
           frameborder="0"
           scrolling="no"
-          style="width: 100%; height: 650px;">
+          style="width: 100%; height: 910px;">
   </iframe>
 </div>
 
@@ -88,7 +88,7 @@ For each vessel journey, we calculate the total emissions of various GHG compone
   <iframe src="../interactive/ais/co2 country vessel type.html"
           frameborder="0"
           scrolling="no"
-          style="width: 100%; height: 650px;">
+          style="width: 100%; height: 550px;">
   </iframe>
 </div>
 
@@ -98,7 +98,7 @@ The following grid expresses the same data as a stacked bar chart to explore the
   <iframe src="../interactive/ais/co2 stacked bars.html"
           frameborder="0"
           scrolling="no"
-          style="width: 100%;height: 800px">
+          style="width: 100%;height: 910px">
   </iframe>
 </div>
 
@@ -108,7 +108,7 @@ Similarly, the tree map below shows the annual composition of CO2 emissions acro
   <iframe src="../interactive/ais/co2 treemap.html"
           frameborder="0"
           scrolling="no"
-          style="width: 100%;height: 800px">
+          style="width: 100%; height: 640px;">
   </iframe>
 </div>
 

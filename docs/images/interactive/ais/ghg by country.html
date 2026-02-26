@@ -9,14 +9,14 @@
   <style>
     html, body {
       height: 100%;
-      margin-bottom: 5px;
+      margin: 2px;
       padding: 2px;
       font-family: 'Open Sans', sans-serif;
       background-color: white;
     }
     h2 {
       font-size: 20px;
-      margin-bottom: 10px;
+      margin: 2px;
     }
     #chart {
       width: 100%;
@@ -155,7 +155,7 @@
     
     let fullData = [];
 
-    Papa.parse("data/Monthly GHG by Country.csv", {
+    Papa.parse("https://raw.githubusercontent.com/cherrylchico/pacific-observatory-ais-data/main/data/Monthly%20GHG%20by%20Country.csv", {
       download: true,
       header: true,
       skipEmptyLines: true,

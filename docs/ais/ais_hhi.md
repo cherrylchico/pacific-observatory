@@ -9,9 +9,13 @@ Where $s_i$ is the  market share of operator $i$. HHI value close to 0 indicates
 
 Here, the market share is defined by the share of port calls from an operator. We use the [port calls data](ais_trade.md) derived from AIS, and the operator information from ship register data. Note that this excludes all vessels not registered with the IMO which is ~12% of port calls from cargo, tanker, and passenger vessels. 
 
-## HHI per Country and Vessel Category
+The following interactive graph displays yearly HHI values for each country by vessel category. To use this graph:
 
-The following graph displays the latest and 2009 HHI values for each country and vessel category. The countries are ranked from highest (most concentrated) to lowest (most competitive) latest HHI.
+1. **Compare two years**: Select different years in both fields to see how market concentration changed between them.
+2. **View a single year**: Select the same year in both fields to see a snapshot of that year's data.
+3. **Change vessel category**: Use the category selector to view HHI values for different vessel types.
+
+Note: Countries are sorted according to the latest year selected.
 
 <div style="width: 100%; max-width: 800px; margin: 0 auto;">
   <iframe src="../interactive/ais/hhi-compare.html"

@@ -9,14 +9,14 @@
   <style>
     html, body {
       height: 100%;
-      margin-bottom: 5px;
+      margin: 2px;
       padding: 2px;
       font-family: 'Open Sans', sans-serif;
       background-color: white;
     }
     h2 {
       font-size: 20px;
-      margin-bottom: 10px;
+      margin: 2px;
     }
     label, select {
       font-size: 14px;
@@ -33,6 +33,41 @@
       font-family: 'Open Sans', sans-serif;
       color: #333;
       cursor: pointer;
+    }
+    #filterContainer {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+    .filter-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .time-buttons {
+      display: flex;
+      gap: 5px;
+    }
+    .time-btn {
+      background-color: transparent;
+      border: 1px solid #888;
+      padding: 4px 12px;
+      font-size: 14px;
+      font-family: 'Open Sans', sans-serif;
+      cursor: pointer;
+      color: #333;
+      border-radius: 3px;
+      transition: all 0.2s;
+    }
+    .time-btn:hover {
+      background-color: #f0f0f0;
+    }
+    .time-btn.active {
+      background-color: #0071bc;
+      color: white;
+      border-color: #0071bc;
     }
     #chartsWrapper {
       width: 100%;
@@ -68,9 +103,22 @@
   </p>
 </div>
 
-<select id="countrySelect"></select>
-
-<select id="portSelect"></select>
+<div id="filterContainer">
+  <div class="filter-row">
+    <select id="countrySelect"></select>
+  </div>
+  <div class="filter-row">
+    <select id="portSelect"></select>
+  </div>
+  <div class="filter-row">
+    <div class="time-buttons">
+      <button class="time-btn" data-years="1">1Y</button>
+      <button class="time-btn" data-years="3">3Y</button>
+      <button class="time-btn" data-years="5">5Y</button>
+      <button class="time-btn active" data-years="all">All</button>
+    </div>
+  </div>
+</div>
 
 <div id="chartsWrapper">
   <div class="chart-block">
@@ -166,6 +214,16 @@
 
     countrySelect.addEventListener("change", populatePortDropdown);
     countrySelect.value = "__ALL__";
+
+    const timeButtons = document.querySelectorAll(".time-btn");
+    timeButtons.forEach(btn => {
+      btn.addEventListener("click", function() {
+        timeButtons.forEach(b => b.classList.remove("active"));
+        this.classList.add("active");
+        updateCharts();
+      });
+    });
+
     populatePortDropdown();
   }
 
@@ -200,6 +258,8 @@
   function updateCharts() {
     const selectedCountry = document.getElementById("countrySelect").value;
     const selectedPort = document.getElementById("portSelect").value;
+    const activeTimeBtn = document.querySelector(".time-btn.active");
+    const selectedYears = activeTimeBtn ? activeTimeBtn.dataset.years : "all";
 
     let filtered = [...fullData];
 
@@ -209,6 +269,18 @@
       if (selectedPort !== "__ALL_PORTS_PER_COUNTRY__") {
         filtered = filtered.filter(d => d.Port === selectedPort);
       }
+    }
+
+    if (selectedYears !== "all" && filtered.length > 0) {
+      const allDates = filtered.map(d => new Date(d.year, d.month - 1));
+      const maxDate = new Date(Math.max(...allDates));
+      const yearsNum = parseInt(selectedYears, 10);
+      const minDate = new Date(maxDate.getFullYear() - yearsNum, maxDate.getMonth());
+
+      filtered = filtered.filter(d => {
+        const rowDate = new Date(d.year, d.month - 1);
+        return rowDate >= minDate;
+      });
     }
 
     const allPeriods = [...new Set(filtered.map(d => `${d.year}-${String(d.month).padStart(2, "0")}`))].sort();

@@ -74,7 +74,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="prev" title="Port Arrivals and Trade Volume" href="ais_trade.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Feb 23, 2026"/>
+    <meta name="docbuild:last-update" content="Feb 26, 2026"/>
   </head>
   
   
@@ -434,9 +434,7 @@ document.write(`
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
+
 </div></div>
       
     </div>
@@ -452,14 +450,6 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hhi-per-country-and-vessel-category">HHI per Country and Vessel Category</a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -471,15 +461,18 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="market-concentration-of-vessel-operators">
 <h1>Market concentration of vessel operators<a class="headerlink" href="#market-concentration-of-vessel-operators" title="Permalink to this heading">#</a></h1>
-<p>Market concentration among vessel operators in Pacific Island countries can be analyzed using the Herfindahl-Hirschman Index (HHI):
-$<span class="math notranslate nohighlight">\(
-HHI =  \sum s_i^2 
-\)</span>$</p>
+<p>Market concentration among vessel operators in Pacific Island countries can be analyzed using the Herfindahl-Hirschman Index (HHI):</p>
+<div class="math notranslate nohighlight">
+\[HHI = \sum s_i^2\]</div>
 <p>Where <span class="math notranslate nohighlight">\(s_i\)</span> is the  market share of operator <span class="math notranslate nohighlight">\(i\)</span>. HHI value close to 0 indicates near perfect competition, while HHI value close to 1 indicates monopoly.</p>
 <p>Here, the market share is defined by the share of port calls from an operator. We use the <a class="reference internal" href="ais_trade.html"><span class="doc std std-doc">port calls data</span></a> derived from AIS, and the operator information from ship register data. Note that this excludes all vessels not registered with the IMO which is ~12% of port calls from cargo, tanker, and passenger vessels.</p>
-<section id="hhi-per-country-and-vessel-category">
-<h2>HHI per Country and Vessel Category<a class="headerlink" href="#hhi-per-country-and-vessel-category" title="Permalink to this heading">#</a></h2>
-<p>The following graph displays the latest and 2009 HHI values for each country and vessel category. The countries are ranked from highest (most concentrated) to lowest (most competitive) latest HHI.</p>
+<p>The following interactive graph displays yearly HHI values for each country by vessel category. To use this graph:</p>
+<ol class="arabic simple">
+<li><p><strong>Compare two years</strong>: Select different years in both fields to see how market concentration changed between them.</p></li>
+<li><p><strong>View a single year</strong>: Select the same year in both fields to see a snapshot of that year’s data.</p></li>
+<li><p><strong>Change vessel category</strong>: Use the category selector to view HHI values for different vessel types.</p></li>
+</ol>
+<p>Note: Countries are sorted according to the latest year selected.</p>
 <div style="width: 100%; max-width: 800px; margin: 0 auto;">
   <iframe src="../interactive/ais/hhi-compare.html"
           frameborder="0"
@@ -487,7 +480,6 @@ HHI =  \sum s_i^2
           style="width: 100%; height: 660px;">
   </iframe>
 </div>
-</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -545,21 +537,6 @@ HHI =  \sum s_i^2
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hhi-per-country-and-vessel-category">HHI per Country and Vessel Category</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
-              
             
           </div>
           <footer class="bd-footer-content">
@@ -581,7 +558,7 @@ By World Bank
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Feb 23, 2026.
+  Last updated on Feb 26, 2026.
   <br/>
 </p>
   </div>
